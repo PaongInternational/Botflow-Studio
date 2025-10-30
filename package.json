@@ -1,0 +1,11 @@
+{
+  "name": "botflow-studio",
+  "version": "2.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "start": "node backend/src/server.js",
+    "build": "scripts/build_and_bundle_local.sh"
+  }
+}
