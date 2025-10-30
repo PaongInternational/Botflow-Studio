@@ -1,0 +1,47 @@
+{
+  "name": "Save Telegram Message to SQLite",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Telegram Trigger",
+      "type": "telegramTrigger",
+      "parameters": {
+        "event": "message"
+      }
+    },
+    {
+      "id": "2",
+      "name": "SQLite Insert",
+      "type": "sqlite",
+      "parameters": {
+        "operation": "insert",
+        "table": "messages",
+        "columns": [
+          "chat_id",
+          "from_id",
+          "text",
+          "received_at"
+        ],
+        "values": [
+          "={{$json[\"chat\"].id}}",
+          "={{$json[\"from\"].id}}",
+          "={{$json[\"text\"]}}",
+          "={{new Date().toISOString()}}"
+        ]
+      }
+    }
+  ],
+  "connections": {
+    "1": [
+      {
+        "node": "2",
+        "type": "main"
+      }
+    ]
+  },
+  "active": false,
+  "tags": [
+    "database",
+    "telegram"
+  ]
+}
