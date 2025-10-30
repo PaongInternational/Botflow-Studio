@@ -1,0 +1,54 @@
+{
+  "name": "Telegram Hello World",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Telegram Trigger",
+      "type": "telegramTrigger",
+      "parameters": {
+        "event": "message"
+      }
+    },
+    {
+      "id": "2",
+      "name": "Set Message",
+      "type": "set",
+      "parameters": {
+        "values": [
+          {
+            "name": "text",
+            "value": "Hello, this is a demo reply from BotFlow Studio!"
+          }
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "name": "Telegram Send",
+      "type": "telegram",
+      "parameters": {
+        "chatId": "={{$json[\"chat\"].id}}",
+        "text": "={{$node[\"Set Message\"].json[\"text\"]}}"
+      }
+    }
+  ],
+  "connections": {
+    "1": [
+      {
+        "node": "2",
+        "type": "main"
+      }
+    ],
+    "2": [
+      {
+        "node": "3",
+        "type": "main"
+      }
+    ]
+  },
+  "active": false,
+  "tags": [
+    "example",
+    "telegram"
+  ]
+}
