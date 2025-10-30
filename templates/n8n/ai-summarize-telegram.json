@@ -1,0 +1,54 @@
+{
+  "name": "AI Summarize Telegram Message",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Telegram Trigger",
+      "type": "telegramTrigger",
+      "parameters": {
+        "event": "message"
+      }
+    },
+    {
+      "id": "2",
+      "name": "AI Summarize",
+      "type": "httpRequest",
+      "parameters": {
+        "url": "http://localhost:3000/api/ai/generate",
+        "method": "POST",
+        "body": {
+          "profileId": "<select_profile>",
+          "prompt": "Summarize this message: {{$json[\"text\"]}}"
+        }
+      }
+    },
+    {
+      "id": "3",
+      "name": "Telegram Send",
+      "type": "telegram",
+      "parameters": {
+        "chatId": "={{$json[\"chat\"].id}}",
+        "text": "={{$node[\"AI Summarize\"].json[\"result\"]}}"
+      }
+    }
+  ],
+  "connections": {
+    "1": [
+      {
+        "node": "2",
+        "type": "main"
+      }
+    ],
+    "2": [
+      {
+        "node": "3",
+        "type": "main"
+      }
+    ]
+  },
+  "active": false,
+  "tags": [
+    "ai",
+    "telegram"
+  ]
+}
